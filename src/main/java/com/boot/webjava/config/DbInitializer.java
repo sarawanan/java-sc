@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class DbInitializer implements ApplicationRunner {
@@ -18,7 +19,10 @@ public class DbInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        userRepository.save(User.builder().name("Sara").address("Test Address").build());
-        productRepository.save(Product.builder().name("Rice").qty(10).price(100).build());
+        userRepository.save(User.builder().username("admin")
+                .password(new BCryptPasswordEncoder().encode("admin"))
+                .role("ROLE").build());
+        productRepository.save(Product.builder().name("Rice").qty(10).price(200).build());
+        productRepository.save(Product.builder().name("Wheat").qty(10).price(100).build());
     }
 }

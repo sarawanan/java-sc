@@ -60,14 +60,14 @@ public class TestCartController {
 
     @Test
     public void testCreateCart() throws Exception {
-        User user = User.builder().id(1).name("Sara").address("Test Address").build();
+        User user = User.builder().id(1).username("Sara").password("password").build();
         Mockito.when(userRepository.findById(Mockito.anyInt())).thenReturn(
                 Optional.of(user));
         Mockito.when(cartRepository.save(Mockito.any())).thenReturn(Cart.builder().id(1).user(user).build());
         mockMvc.perform(post("/api/cart/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.user.name").value("Sara"));
+                .andExpect(jsonPath("$.user.username").value("Sara"));
     }
 
     @Test
@@ -84,13 +84,13 @@ public class TestCartController {
 
     @Test
     public void testGetCart() throws Exception {
-        User user = User.builder().id(1).name("Sara").address("Test Address").build();
+        User user = User.builder().id(1).username("Sara").password("password").build();
         Mockito.when(userRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(user));
         Mockito.when(cartRepository.findByUser(user)).thenReturn(Cart.builder().id(1).user(user).build());
         mockMvc.perform(get("/api/cart/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.user.name").value("Sara"));
+                .andExpect(jsonPath("$.user.username").value("Sara"));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class TestCartController {
 
     @Test
     public void testAddToCartWithNoProductException() throws Exception {
-        User user = User.builder().id(1).name("Sara").address("Test Address").build();
+        User user = User.builder().id(1).username("Sara").password("password").build();
         String json = new ObjectMapper().writeValueAsString(RequestDto.builder().productId(1).qty(10).build());
         Mockito.when(cartRepository.findById(Mockito.anyInt()))
                 .thenReturn(Optional.of(Cart.builder().id(1).user(user).build()));
@@ -120,7 +120,7 @@ public class TestCartController {
 
     @Test
     public void testAddToCart() throws Exception {
-        User user = User.builder().id(1).name("Sara").address("Test Address").build();
+        User user = User.builder().id(1).username("Sara").password("password").build();
         String json = new ObjectMapper().writeValueAsString(RequestDto.builder().productId(1).qty(10).build());
         Mockito.when(cartRepository.findById(Mockito.anyInt()))
                 .thenReturn(Optional.of(Cart.builder().id(1).list(new ArrayList<>()).user(user).build()));

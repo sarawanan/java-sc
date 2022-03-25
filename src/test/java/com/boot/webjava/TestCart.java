@@ -25,8 +25,8 @@ public class TestCart {
     public void testCartCreate() {
         User sara = entityManager.persist(User
                 .builder()
-                .name("Sara")
-                .address("test address")
+                .username("Sara")
+                .password("password")
                 .build());
         Product rice = entityManager.persist(Product
                 .builder()

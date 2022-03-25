@@ -20,8 +20,8 @@ public class TestUser {
     public void testUserCreateAndFetch() {
         User sara = entityManager.persist(User
                 .builder()
-                .name("Sara")
-                .address("test address")
+                .username("Sara")
+                .password("password")
                 .build());
         repository.findById(sara.getId()).ifPresent(user -> assertEquals(user.getId(), sara.getId()));
     }

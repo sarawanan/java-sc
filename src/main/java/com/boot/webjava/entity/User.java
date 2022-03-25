@@ -19,6 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
-    private String name;
-    private String address;
+    private String username;
+    private String password;
+    private String role;
 }

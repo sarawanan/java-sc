@@ -38,14 +38,14 @@ public class TestUserController {
         Mockito.when(userRepository.save(Mockito.any()))
                 .thenReturn(User
                         .builder()
-                        .name("Saro")
+                        .username("Saro")
                         .id(1)
-                        .address("Test")
+                        .password("password")
                         .build());
         mockMvc.perform(post("/api/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(
-                                User.builder().name("Saro").address("Test").build())))
+                                User.builder().username("Saro").password("password").build())))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
@@ -56,14 +56,14 @@ public class TestUserController {
     public void testAllUsers() throws Exception {
         Mockito.when(userRepository.findAll())
                 .thenReturn(List.of(
-                        User.builder().id(1).name("Saro").address("Test").build(),
-                        User.builder().id(2).name("Saro1").address("Test1").build()
+                        User.builder().id(1).username("Saro").password("password").build(),
+                        User.builder().id(2).username("Saro1").password("password1").build()
                 ));
         mockMvc.perform(get("/api/user"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].name").value("Saro"))
-                .andExpect(jsonPath("$.[1].name").value("Saro1"))
+                .andExpect(jsonPath("$.[0].username").value("Saro"))
+                .andExpect(jsonPath("$.[1].username").value("Saro1"))
                 .andExpect(jsonPath("$.[1].id").value("2"));
     }
 }
