@@ -18,11 +18,14 @@ public class DbInitializer implements ApplicationRunner {
     private ProductRepository productRepository;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         userRepository.save(User.builder().username("admin")
                 .password(new BCryptPasswordEncoder().encode("admin"))
                 .role("ADMIN").build());
-        productRepository.save(Product.builder().name("Rice").qty(10).price(200).build());
-        productRepository.save(Product.builder().name("Wheat").qty(10).price(100).build());
+        productRepository.save(Product.builder().name("Rice").qty(10).price(80).build());
+        productRepository.save(Product.builder().name("Wheat").qty(10).price(70).build());
+        productRepository.save(Product.builder().name("Sugar").qty(40).price(50).build());
+        productRepository.save(Product.builder().name("Bread").qty(30).price(20).build());
+        productRepository.save(Product.builder().name("Butter").qty(10).price(10).build());
     }
 }
