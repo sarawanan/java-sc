@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,10 +36,12 @@ public class TestProductController {
     private MockMvc mockMvc;
 
     @Test
+    @WithMockUser("admin")
     public void testCreateProduct() throws Exception {
         Mockito.when(productRepository.save(Mockito.any()))
                 .thenReturn(Product.builder().id(1).name("Rice").qty(10).price(100).build());
         mockMvc.perform(post("/api/product")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(
                                 Product
@@ -53,6 +57,7 @@ public class TestProductController {
     }
 
     @Test
+    @WithMockUser("admin")
     public void testAllProducts() throws Exception {
         Mockito.when(productRepository.findAll())
                 .thenReturn(List.of(

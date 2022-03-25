@@ -21,7 +21,7 @@ public class DbInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         userRepository.save(User.builder().username("admin")
                 .password(new BCryptPasswordEncoder().encode("admin"))
-                .role("ROLE").build());
+                .role("ADMIN").build());
         productRepository.save(Product.builder().name("Rice").qty(10).price(200).build());
         productRepository.save(Product.builder().name("Wheat").qty(10).price(100).build());
     }
